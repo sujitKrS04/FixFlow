@@ -58,8 +58,8 @@ Multi-step interactive narratives that guide you through:
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/fixflow.git
-cd fixflow
+git clone https://github.com/sujitKrS04/FixFlow.git
+cd FixFlow
 ```
 
 2. **Install dependencies**
@@ -337,6 +337,6 @@ MIT License - see [LICENSE](LICENSE) for details
 
 **Made with ❤️ by developers, for developers**
 
-[Demo](https://fixflow.vercel.app) • [GitHub](https://github.com/yourusername/fixflow) • [Report Bug](https://github.com/yourusername/fixflow/issues)
+[Demo](https://fixflow.vercel.app) • [GitHub](https://github.com/sujitKrS04/FixFlow) • [Report Bug](https://github.com/sujitKrS04/FixFlow/issues)
 
 </div>
