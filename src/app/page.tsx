@@ -15,9 +15,11 @@ import {
   AlertCircle,
   X,
   CheckCircle2,
+  Layers,
 } from "lucide-react";
 import { Header } from "@/components/ui/Header";
 import { Footer } from "@/components/ui/Footer";
+import { MultiErrorBatchAnalyzer } from "@/components/debug-components/MultiErrorBatchAnalyzer";
 
 export default function DebugCopilot() {
   const { thread } = useTamboThread();
@@ -25,6 +27,7 @@ export default function DebugCopilot() {
   const [inputMode, setInputMode] = useState<"text" | "file" | "url">("text");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [urlError, setUrlError] = useState<string>("");
+  const [showBatchAnalyzer, setShowBatchAnalyzer] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +38,24 @@ export default function DebugCopilot() {
   useEffect(() => {
     scrollToBottom();
   }, [thread.messages]);
+
+  useEffect(() => {
+    // Check if errors were passed via URL (from browser extension)
+    const params = new URLSearchParams(window.location.search);
+    const errors = params.get('errors');
+    if (errors) {
+      setValue(decodeURIComponent(errors));
+      // Clear URL params
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [setValue]);
+
+  const handleBatchAnalyze = (errors: string[]) => {
+    const batchText = `📦 Batch Error Analysis (${errors.length} errors)\n\n` +
+      errors.map((err, i) => `--- Error ${i + 1} ---\n${err}`).join('\n\n');
+    setValue(batchText);
+    submit();
+  };
 
   const validateGithubUrl = (url: string): boolean => {
     const githubUrlPattern = /^https?:\/\/(www\.)?(github\.com|stackoverflow\.com|stackexchange\.com)/i;
@@ -227,7 +248,7 @@ export default function DebugCopilot() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-surface/80 backdrop-blur-md border border-primary/20 rounded-2xl p-4 sm:p-6 shadow-xl">
                 {/* Input Mode Selector */}
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-4 flex-wrap">
                   <button
                     onClick={() => {
                       setInputMode("text");
@@ -269,6 +290,13 @@ export default function DebugCopilot() {
                   >
                     <Github size={16} />
                     <span>URL</span>
+                  </button>
+                  <button
+                    onClick={() => setShowBatchAnalyzer(true)}
+                    className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm flex items-center gap-2 transition-all font-medium bg-accent/20 border border-accent/50 hover:bg-accent/30 hover:border-accent/70"
+                  >
+                    <Layers size={16} />
+                    <span>Batch Analysis</span>
                   </button>
                 </div>
 
@@ -475,6 +503,13 @@ export default function DebugCopilot() {
       </main>
 
       <Footer />
+
+      {/* Multi-Error Batch Analyzer Modal */}
+      <MultiErrorBatchAnalyzer
+        isOpen={showBatchAnalyzer}
+        onClose={() => setShowBatchAnalyzer(false)}
+        onAnalyze={handleBatchAnalyze}
+      />
     </div>
   );
 }

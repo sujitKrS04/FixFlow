@@ -42,11 +42,11 @@ export function Header() {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="https://github.com"
+            href="https://github.com/sujitKrS04/FixFlow"
             target="_blank"
             rel="noopener noreferrer"
             className="p-1.5 sm:p-2 rounded-lg border border-primary/30 bg-surface hover:bg-primary/10 transition-all hover:border-primary/50 hover:shadow-md"
-            aria-label="GitHub"
+            aria-label="View on GitHub"
           >
             <Github size={18} className="sm:w-5 sm:h-5" />
           </motion.a>

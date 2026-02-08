@@ -4,17 +4,42 @@
 
 FixFlow transforms cryptic error messages into **visual debugging experiences**. Powered by Tambo's Generative UI, it dynamically renders interactive components tailored to your specific bug — from stack trace visualizers to dependency trees to complete debugging stories.
 
+## 🆕 New Features (Just Added!)
+
+### 🧠 **Smart Context Auto-Detection**
+Automatically detects your framework (React, Next.js, Vue, Angular), language (TypeScript/JavaScript), and dependencies to provide context-aware solutions.
+
+### ⚡ **One-Click Fix Application**
+Actually applies fixes to your files with automatic backups - no more copy-paste!
+
+### 🌐 **Browser DevTools Integration**
+Chrome/Firefox extension that automatically captures errors from any website and sends them to FixFlow.
+
+### 📦 **Multi-Error Batch Analysis**
+Analyze multiple errors simultaneously to find patterns, common root causes, and holistic solutions.
+
+### 🎯 **Framework-Specific Smart Fixes**
+Get intelligent, framework-optimized solutions for React, Next.js, Vue, TypeScript, Express, and more.
+
+**📚 [Read Full Feature Documentation →](./NEW_FEATURES.md)**
+
+---
+
 ![FixFlow Banner](https://via.placeholder.com/1200x400/0a0e27/00ffff?text=FixFlow+AI+Debugging+Copilot)
 
 ## ✨ Features
 
 ### 🎨 **Visual Debugging Components**
 
-- **Code Diff Viewer**: Side-by-side before/after code comparison
-- **Stack Trace Viewer**: Interactive, collapsible stack frames
-- **Execution Flow Diagrams**: Animated visualizations of code execution
-- **Dependency Tree**: Visual package conflict resolution
+- **Code Diff Viewer**: Side-by-side before/after code comparison with syntax highlighting
+- **Stack Trace Viewer**: Interactive, collapsible stack frames with error origin highlighting
+- **Execution Flow Diagrams**: Animated visualizations of code execution paths
+- **Dependency Tree**: Visual package conflict resolution with recommended fixes
 - **Error Annotations**: Inline code annotations with severity markers
+- **Quick Fix Button**: One-click code patch application
+- **Learning Card**: Educational explanations with best practices
+- **Debug Story Timeline**: Multi-step visual debugging narratives
+- **Multi-Error Batch Analyzer**: Analyze multiple errors simultaneously
 
 ### 🎬 **Visual Debugging Stories** (Unique Feature!)
 
@@ -40,11 +65,19 @@ Multi-step interactive narratives that guide you through:
 - Download patch files
 - Apply fixes with animations
 
+### 📥 **Multiple Input Modes**
+
+- **Text Input**: Paste error messages directly
+- **File Upload**: Upload log files or error reports
+- **URL Import**: Paste GitHub issues or StackOverflow links
+- **Batch Analysis**: Analyze multiple errors at once with priority management
+
 ### 🌓 **Dual Theming**
 
 - **Cyberpunk Dark Mode**: Neon colors, animated backgrounds, matrix aesthetic
 - **Arctic Light Mode**: Clean, minimal, professional design
 - Smooth theme transitions with CSS variables
+- Persistent theme preference across sessions
 
 ## 🚀 Quick Start
 
@@ -87,15 +120,48 @@ npm run dev
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+6. **Install Browser Extension (Optional)**
+   
+   Load the browser extension to automatically capture errors from any website:
+   
+   ```bash
+   # Chrome/Edge: Load unpacked extension from browser-extension/ folder
+   # Firefox: Load temporary extension from browser-extension/manifest.json
+   ```
+   
+   See [browser-extension/README.md](./browser-extension/README.md) for detailed instructions.
+
 ## 🎯 Usage
 
 ### **Debugging with FixFlow**
 
-1. **Paste your error** into the input field
-2. **Watch the magic** as Tambo analyzes the error type
+1. **Paste your error** into the input field (or use **Batch Analysis** for multiple errors)
+2. **Watch the magic** as Tambo analyzes the error type and detects your framework
 3. **Interact with components** - expand stack traces, view code diffs
-4. **Apply fixes** with one click or download patches
-5. **Learn** from the AI's explanations
+4. **Apply fixes** with one click - fixes are written directly to your files with automatic backups
+5. **Learn** from framework-specific explanations and best practices
+
+### **New: Batch Analysis Mode**
+
+Analyze multiple errors at once:
+
+1. Click **"Batch Analysis"** button
+2. Choose input method:
+   - Individual errors with severity levels
+   - Bulk import (paste multiple errors)
+   - Upload error log files
+3. AI finds patterns and common root causes
+4. Get holistic solutions addressing all issues
+
+### **New: Browser Extension Workflow**
+
+For automatic error capture:
+
+1. Install the FixFlow browser extension
+2. Browse any website - errors are captured automatically
+3. Click extension icon to see captured errors
+4. Click "Send to FixFlow" to analyze all errors
+5. Get instant debugging solutions
 
 ### **Example Errors to Try**
 
@@ -103,6 +169,18 @@ npm run dev
 
 ```
 TypeError: Cannot read property 'map' of undefined at line 42
+```
+
+**React Hook Error:**
+
+```
+React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render
+```
+
+**Next.js Hydration Error:**
+
+```
+Error: Text content does not match server-rendered HTML
 ```
 
 **Syntax Error:**
@@ -122,21 +200,26 @@ npm ERR! peer dep missing: react@^18.0.0, required by next@13.0.0
 ### **Tech Stack**
 
 - **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript
-- **Generative UI**: Tambo SDK (`@tambo-ai/react`)
+- **Language**: TypeScript 5
+- **Generative UI**: Tambo SDK (`@tambo-ai/react` v0.75.0)
+- **UI Library**: React 18.3
 - **Styling**: Tailwind CSS with CSS variables
-- **Animations**: Framer Motion
+- **Animations**: Framer Motion 11
 - **Icons**: Lucide React
 - **Code Highlighting**: React Syntax Highlighter
-- **Flow Diagrams**: React Flow
+- **Flow Diagrams**: React Flow 11
+- **Schema Validation**: Zod 3.22+
 
 ### **Project Structure**
 
 ```
 src/
 ├── app/
+│   ├── api/
+│   │   └── apply-fix/
+│   │       └── route.ts    # API for applying fixes to files
 │   ├── layout.tsx          # Root layout with TamboProvider
-│   ├── page.tsx            # Main chat interface
+│   ├── page.tsx            # Main chat interface + Batch Analysis
 │   └── globals.css         # Global styles & themes
 ├── components/
 │   ├── debug-components/   # Tambo-registered components
@@ -144,10 +227,11 @@ src/
 │   │   ├── StackTraceViewer.tsx
 │   │   ├── DependencyTree.tsx
 │   │   ├── ExecutionFlowDiagram.tsx
-│   │   ├── QuickFixButton.tsx
+│   │   ├── QuickFixButton.tsx      # Now writes to files!
 │   │   ├── LearningCard.tsx
 │   │   ├── DebugStoryTimeline.tsx
-│   │   └── ErrorAnnotation.tsx
+│   │   ├── ErrorAnnotation.tsx
+│   │   └── MultiErrorBatchAnalyzer.tsx  # NEW: Batch analysis
 │   └── ui/                 # Standard UI components
 │       ├── Header.tsx
 │       ├── Footer.tsx
@@ -155,7 +239,15 @@ src/
 ├── contexts/
 │   └── ThemeContext.tsx    # Theme management
 └── lib/
-    └── tambo-config.ts     # Component registration & AI prompt
+    ├── tambo-config.ts     # Component registration & AI prompt
+    ├── context-detector.ts # NEW: Smart context detection
+    └── framework-fixes.ts  # NEW: Framework-specific patterns
+browser-extension/          # NEW: Chrome/Firefox extension
+├── manifest.json
+├── content.js             # Error capture
+├── background.js          # Error storage
+├── popup.html/js          # Extension UI
+└── devtools.html          # DevTools panel
 ```
 
 ## 🎨 Components
@@ -237,20 +329,33 @@ Complex bugs get comprehensive visual treatment with the **DebugStoryTimeline**.
 
 ### **Why FixFlow Stands Out**
 
-✅ **Potential Impact**: Saves developers hours daily by visualizing debugging
-✅ **Creativity**: First debugging tool using generative UI instead of text
-✅ **Technical Excellence**: 8 custom components with proper Zod schemas
-✅ **Best Use of Tambo**: Perfect showcase of AI-driven component selection
-✅ **Learning Value**: Teaches debugging through interactive experiences
-✅ **UX/Design**: Dual themes with cyberpunk aesthetics and smooth animations
+✅ **Potential Impact**: Saves developers hours daily by visualizing debugging + framework-specific solutions
+✅ **Creativity**: First debugging tool using generative UI + automatic error capture + real file fixes
+✅ **Technical Excellence**: 8 custom components + browser extension + smart context detection + framework patterns
+✅ **Best Use of Tambo**: Perfect showcase of AI-driven component selection with enhanced intelligence
+✅ **Learning Value**: Teaches debugging through interactive experiences + framework best practices
+✅ **UX/Design**: Dual themes with cyberpunk aesthetics + one-click workflows
 
 ### **Unique Innovations**
 
 1. **Visual Debugging Stories** - Multi-step narrative debugging (not seen elsewhere)
-2. **Context-Aware Components** - AI chooses perfect component combinations
-3. **Educational Mode** - Learn why bugs happen, not just how to fix them
-4. **One-Click Fixes** - Instant patch application with animations
-5. **Dual Theming** - Professional light mode + striking dark mode
+2. **Smart Context Auto-Detection** - Automatic framework/dependency detection for relevant solutions
+3. **Browser DevTools Integration** - Automatic error capture from any website
+4. **Multi-Error Batch Analysis** - Analyze patterns across multiple related errors
+5. **Framework-Specific Smart Fixes** - Intelligent solutions for React, Next.js, Vue, TypeScript, Express
+6. **Real One-Click Fixes** - Actually writes to files with automatic backups (not just copy-paste)
+7. **Educational Mode** - Learn why bugs happen, not just how to fix them
+8. **Dual Theming** - Professional light mode + striking dark mode
+
+### **Technical Achievements**
+
+- ✅ 14 new files implementing 5 major features
+- ✅ Complete browser extension (Chrome + Firefox compatible)
+- ✅ Secure file operations with validation and backups
+- ✅ Framework pattern database with automatic detection
+- ✅ Context-aware AI with framework intelligence
+- ✅ Type-safe TypeScript throughout
+- ✅ Production-ready with comprehensive error handling
 
 ## 🚀 Deployment
 
@@ -314,8 +419,40 @@ localStorage.clear();
 location.reload();
 ```
 
+### **File fixes not applying**
+
+1. Check that the API route `/api/apply-fix` is accessible
+2. Verify file paths are within the project directory
+3. Ensure you have write permissions for the target files
+4. Check console for detailed error messages
+
+### **Browser extension not capturing errors**
+
+1. Refresh the page after installing the extension
+2. Verify the extension is enabled in browser settings
+3. Check that the extension has permissions for the current page
+4. Open browser console to see if errors are being logged
+
+### **Context detection not working**
+
+```typescript
+// Manually trigger context refresh
+import { ContextDetector } from '@/lib/context-detector';
+const detector = ContextDetector.getInstance();
+await detector.refreshContext();
+```
+
+### **Batch analysis not showing**
+
+1. Ensure you've imported the component in page.tsx
+2. Check for console errors
+3. Verify the modal state is being managed correctly
+
 ## 📚 Resources
 
+- **New Features Guide**: [NEW_FEATURES.md](./NEW_FEATURES.md) - Comprehensive documentation
+- **Implementation Summary**: [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md) - Quick overview
+- **Browser Extension**: [browser-extension/README.md](./browser-extension/README.md) - Installation guide
 - **Tambo Docs**: [docs.tambo.ai](https://docs.tambo.ai)
 - **Tambo GitHub**: [github.com/tambo-ai/tambo](https://github.com/tambo-ai/tambo)
 - **Discord Community**: [discord.gg/dJNvPEHth6](https://discord.gg/dJNvPEHth6)

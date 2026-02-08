@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Zap, Check, Download, Copy, Loader2 } from "lucide-react";
+import { Zap, Check, Download, Copy, Loader2, AlertTriangle } from "lucide-react";
 
 interface QuickFixButtonProps {
   patchCode: string;
@@ -18,14 +18,39 @@ export function QuickFixButton({
   const [isApplying, setIsApplying] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [error, setError] = useState<string>("");
 
   const handleApplyFix = async () => {
     setIsApplying(true);
-    // Simulate applying fix
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsApplying(false);
-    setIsSuccess(true);
-    setTimeout(() => setIsSuccess(false), 3000);
+    setError("");
+    
+    try {
+      const response = await fetch('/api/apply-fix', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fileName,
+          content: patchCode,
+          action: 'write',
+          backupEnabled: true,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to apply fix');
+      }
+
+      setIsSuccess(true);
+      setTimeout(() => setIsSuccess(false), 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to apply fix to file');
+    } finally {
+      setIsApplying(false);
+    }
   };
 
   const handleCopy = async () => {
@@ -128,6 +153,22 @@ export function QuickFixButton({
               className="mt-4 p-3 bg-success/10 border border-success/30 rounded-lg text-sm"
             >
               ✨ Fix applied successfully! Your code should now work as expected.
+            </motion.div>
+          )}
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 p-3 bg-error/10 border border-error/30 rounded-lg text-sm flex items-start gap-2"
+            >
+              <AlertTriangle size={16} className="text-error flex-shrink-0 mt-0.5" />
+              <div>
+                <strong>Failed to apply fix:</strong> {error}
+                <div className="mt-2 text-xs opacity-80">
+                  Try copying the code manually or downloading the patch file instead.
+                </div>
+              </div>
             </motion.div>
           )}
         </div>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FixFlow DevTools</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0e27;
+      color: #e0e0e0;
+      min-width: 350px;
+    }
+    h2 {
+      margin: 0 0 16px 0;
+      color: #00ffff;
+      font-size: 18px;
+    }
+    .error-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .error-item {
+      background: #1a1e3a;
+      border: 1px solid #2a2e4a;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .error-item:hover {
+      border-color: #00ffff;
+      transform: translateY(-2px);
+    }
+    .error-type {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .error-type.runtime { background: #ef4444; color: white; }
+    .error-type.console { background: #f59e0b; color: white; }
+    .error-type.promise { background: #8b5cf6; color: white; }
+    .error-type.fetch { background: #3b82f6; color: white; }
+    .error-message {
+      font-size: 13px;
+      margin: 6px 0;
+      color: #fff;
+    }
+    .error-details {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+    .buttons {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #00ffff;
+      color: #0a0e27;
+    }
+    .btn-primary:hover {
+      background: #00cccc;
+      transform: scale(1.05);
+    }
+    .btn-secondary {
+      background: #2a2e4a;
+      color: #e0e0e0;
+    }
+    .btn-secondary:hover {
+      background: #3a3e5a;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0.6;
+    }
+    .badge {
+      display: inline-block;
+      background: #ef4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>
+    FixFlow DevTools
+    <span class="badge" id="errorCount">0</span>
+  </h2>
+  
+  <div id="errorContainer">
+    <div class="empty-state">
+      No errors captured yet.<br>
+      Errors will appear here automatically.
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn-primary" id="sendToFixFlow">
+      Send to FixFlow
+    </button>
+    <button class="btn-secondary" id="clearErrors">
+      Clear All
+    </button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
