@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Mode (Arctic Minimal) */
+  --primary: #2563eb;
+  --secondary: #7c3aed;
+  --accent: #06b6d4;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --error: #dc2626;
+  --success: #059669;
+  --warning: #d97706;
+  
+  /* Fonts */
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode (Cyberpunk Developer) */
+  --primary: #00ffff;
+  --secondary: #ff00ff;
+  --accent: #00ff00;
+  --background: #0a0e27;
+  --surface: #1a1f3a;
+  --text: #e0e0ff;
+  --error: #ff3366;
+  --success: #00ff9f;
+  --warning: #ffcc00;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cyberpunk background effect for dark mode */
+[data-theme="dark"] body {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.03) 0%, transparent 50%);
+}
+
+/* Dot grid pattern */
+[data-theme="dark"] body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+/* Scrollbar styling - Hidden */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+/* Custom animations */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Utility classes */
+.glow-border {
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.glow-text {
+  text-shadow: 0 0 10px var(--primary);
+}
+
+.code-block {
+  background: var(--surface);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Loading animation */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: var(--primary);
+    opacity: 1;
+  }
+  50% {
+    border-color: var(--secondary);
+    opacity: 0.5;
+  }
+}
+
+.loading-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
